@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:oura_detect/routes/app_pages.dart';
+import 'package:oura_detect/routes/app_routes.dart';
 import 'package:provider/provider.dart';
-import 'Components/MenuProvider.dart';
-import 'Forms/Theme.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'Provider/MenuProvider.dart';
 import 'UI/HomeScreen.dart';
-
+import 'Utilis/theme.dart';
 
 void main() {
   runApp(
@@ -18,34 +21,47 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF263E60),
-      systemNavigationBarIconBrightness: Brightness.light,
-    ));
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppTheme.whitecolor,
+      statusBarColor: AppTheme.primaryColor,
       statusBarIconBrightness: Brightness.dark,
     ));
 
-    final ThemeData appTheme = ThemeData(
-      appBarTheme: AppBarTheme(
-        elevation: 4,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        backgroundColor: AppTheme.whitecolor,
-      ),
-    );
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: '',
-      theme: ThemeData(
-        textSelectionTheme:
-        TextSelectionThemeData(selectionHandleColor: Colors.transparent),
-      ),
-      home: SafeArea(child: const HomeScreen()),
-      // initialRoute: AppRoutes.root.toName,
-      // getPages: AppPages.list,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return GetMaterialApp(
+            builder: (BuildContext context, Widget? child) {
+              final mediaQueryData = MediaQuery.of(context);
+              final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
+              return MediaQuery(
+                data: mediaQueryData.copyWith(textScaleFactor: 1.0),
+                child: child!,
+              );
+            },
+            home: HomeScreen(),
+            debugShowCheckedModeBanner: false,
+            title: 'AutoRevog',
+            initialRoute: AppRoutes.root.toName,
+            getPages: AppPages.list,
+            theme: ThemeData.light().copyWith(
+              // Set the white theme
+              primaryColor: Colors.white,
+              scaffoldBackgroundColor: Colors.white,
+              textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                ),
+              ),
+              textTheme: GoogleFonts.montserratTextTheme(
+                  Theme.of(context).textTheme.apply(
+                        bodyColor: Colors.white,
+                        displayColor: Colors.white,
+                      )),
+            ));
+      },
     );
   }
 }
