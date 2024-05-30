@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../Components/LineGraph.dart';
+import '../Components/StressLineGraph.dart';
 import '../Components/TextInput.dart';
 import '../Controller/HomeController.dart';
 import '../Utilis/theme.dart';
@@ -186,36 +187,36 @@ class HomeScreen extends GetView<HomeScreenController> {
                 ),
               ),
             ),
-            Obx(
-              () => controller.initialLoading.isFalse &&
-                      controller.contributors!.isNotEmpty
-                  ? LineChartWidget(
-                    contributorsList: controller.contributors!,
-                  )
-                  : Container(),
-            ),
             SizedBox(
-              height: height*0.1,
+              height: height * 0.1,
+            ),
+            Row(
+              children: [
+                Text("Sleep Chart",style: TextStyle(color: Colors.black,fontSize: 24),)
+              ],
             ),
             Obx(
               () => controller.initialLoading.isFalse &&
                       controller.contributors!.isNotEmpty
                   ? LineChartWidget(
-                    contributorsList: controller.contributors!,
-                  )
+                      contributorsList: controller.contributors!,
+                    )
                   : Container(),
             ),
-            SizedBox(
-              height: height*0.1,
+
+            Row(
+              children: [
+                Text("Stress Chart",style: TextStyle(color: Colors.black,fontSize: 24),)
+              ],
             ),
             Obx(
-              () => controller.initialLoading.isFalse &&
-                      controller.contributors!.isNotEmpty
-                  ? LineChartWidget(
-                    contributorsList: controller.contributors!,
-                  )
+              () => controller.initialLoading.isFalse
+                  ? Stresslinegraph(
+                      StressList: controller.stressData,
+                    )
                   : Container(),
             ),
+
           ]),
         ),
       )),

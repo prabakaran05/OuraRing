@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../ModelResponse/StressResponse.dart';
 import '../ModelResponse/SleepResponse.dart';
 import '../Utilis/AppUtility.dart';
 import '../Utilis/app_preference.dart';
@@ -49,7 +48,7 @@ class ApiConnect extends GetConnect {
     return SleepResponse.fromJson(response.body);
   }
 
-  Future<SleepResponse> getHeartRateData(String Url) async {
+  Future<StressResponse> getStressData(String Url) async {
     Map<String, String> header = {
       'Authorization': ApiUrl.ringToken,
     };
@@ -67,7 +66,7 @@ class ApiConnect extends GetConnect {
       AppPreference().clearData();
       Get.offAllNamed(AppRoutes.HomeScreen.toName);
     }
-    return SleepResponse.fromJson(response.body);
+    return StressResponse.fromJson(response.body);
   }
 
 

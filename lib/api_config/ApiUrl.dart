@@ -1,7 +1,5 @@
 
-import '../Utilis/app_preference.dart';
-
-class ApiUrl {
+  class ApiUrl {
 
   static const bool isProductionUrl = false;
   static const String appVersion = "3.3";
@@ -12,8 +10,7 @@ class ApiUrl {
       ? "https://api.ouraring.com/v2/usercollection/"
       : "https://api.ouraring.com/v2/usercollection/";
 
-
   static String getSleepData = "daily_sleep?start_date=";
-  static String getHeartRateData = "daily_sleep?start_date=";
+  static String getStressData = "daily_stress?start_date=";
 
 }

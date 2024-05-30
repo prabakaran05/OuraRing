@@ -10,7 +10,7 @@ class LineChartWidget extends StatelessWidget {
   LineChartWidget({required this.contributorsList});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     List<FlSpot> spotsDeepSleep = [];
     List<FlSpot> spotsEfficiency = [];
     List<FlSpot> spotsLatency = [];
@@ -93,30 +93,30 @@ class LineChartWidget extends StatelessWidget {
                 belowBarData: BarAreaData(
                     show: true, color: Colors.cyan.withOpacity(0.3))),
           ],
-          titlesData: FlTitlesData(
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(showTitles: true),
-              axisNameWidget: Text('Value',style: TextStyle(color: Colors.black),),
-              axisNameSize: 16,
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                getTitlesWidget: (value, meta) {
-                  final index = value.toInt();
-                  if (index < 0 || index >= contributorsList.length) {
-                    return const Text('hello',style: TextStyle(color: Colors.red));
-                  }
-                  return SideTitleWidget(
-                    axisSide: meta.axisSide,
-                    child: Text('Day ${index + 1}',style: TextStyle(color: Colors.black),),
-                  );
-                },
-              ),
-              axisNameWidget: Text('Days',style: TextStyle(color: Colors.black),),
-              axisNameSize: 16,
-            ),
-          ),
+          // titlesData: FlTitlesData(
+          //   leftTitles: AxisTitles(
+          //     sideTitles: SideTitles(showTitles: true),
+          //     axisNameWidget: Text('Value',style: TextStyle(color: Colors.black),),
+          //     axisNameSize: 16,
+          //   ),
+          //   bottomTitles: AxisTitles(
+          //     sideTitles: SideTitles(
+          //       showTitles: true,
+          //       getTitlesWidget: (value, meta) {
+          //         final index = value.toInt();
+          //         if (index < 0 || index >= contributorsList.length) {
+          //           return const Text('hello',style: TextStyle(color: Colors.red));
+          //         }
+          //         return SideTitleWidget(
+          //           axisSide: meta.axisSide,
+          //           child: Text('Day ${index + 1}',style: TextStyle(color: Colors.black),),
+          //         );
+          //       },
+          //     ),
+          //     axisNameWidget: Text('Days',style: TextStyle(color: Colors.black),),
+          //     axisNameSize: 16,
+          //   ),
+          // ),
           borderData: FlBorderData(
             show: false,
           ),
