@@ -47,18 +47,18 @@ class MyApp extends StatelessWidget {
             getPages: AppPages.list,
             theme: ThemeData.light().copyWith(
               // Set the white theme
-              primaryColor: Colors.white,
-              scaffoldBackgroundColor: Colors.white,
+              primaryColor: AppTheme.primaryColor,
+              scaffoldBackgroundColor: AppTheme.primaryColor,
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
+                      MaterialStateProperty.all<Color>(AppTheme.primaryColor,),
                 ),
               ),
               textTheme: GoogleFonts.montserratTextTheme(
                   Theme.of(context).textTheme.apply(
-                        bodyColor: Colors.white,
-                        displayColor: Colors.white,
+                        bodyColor: AppTheme.primaryColor,
+                        displayColor: AppTheme.primaryColor,
                       )),
             ));
       },

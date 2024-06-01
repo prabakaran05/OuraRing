@@ -2,37 +2,27 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../ModelResponse/OuraApiResponse.dart';
 import '../ModelResponse/SleepResponse.dart';
+import '../Utilis/theme.dart';
 
 class LineChartWidget extends StatelessWidget {
-  final List<Contributors> contributorsList;
 
-  LineChartWidget({required this.contributorsList});
+  final List<OuraApiResponse> StressList;
+  LineChartWidget({required this.StressList});
 
   @override
   Widget build(BuildContext context){
+
     List<FlSpot> spotsDeepSleep = [];
     List<FlSpot> spotsEfficiency = [];
-    List<FlSpot> spotsLatency = [];
-    List<FlSpot> spotsRemSleep = [];
-    List<FlSpot> spotsRestfulness = [];
-    List<FlSpot> spotsTiming = [];
-    List<FlSpot> spotsTotalSleep = [];
 
-    for (int i = 0; i < contributorsList.length; i++) {
-      final contributors = contributorsList[i];
+    for (int i = 0; i < StressList.length; i++) {
+      final contributors = StressList[i];
       spotsDeepSleep
           .add(FlSpot(i.toDouble(), contributors.deepSleep!.toDouble()));
       spotsEfficiency
           .add(FlSpot(i.toDouble(), contributors.efficiency!.toDouble()));
-      spotsLatency.add(FlSpot(i.toDouble(), contributors.latency!.toDouble()));
-      spotsRemSleep
-          .add(FlSpot(i.toDouble(), contributors.remSleep!.toDouble()));
-      spotsRestfulness
-          .add(FlSpot(i.toDouble(), contributors.restfulness!.toDouble()));
-      spotsTiming.add(FlSpot(i.toDouble(), contributors.timing!.toDouble()));
-      spotsTotalSleep
-          .add(FlSpot(i.toDouble(), contributors.totalSleep!.toDouble()));
     }
 
     double height = MediaQuery.of(context).size.height;
@@ -47,51 +37,16 @@ class LineChartWidget extends StatelessWidget {
                 spots: spotsDeepSleep,
                 isCurved: true,
                 barWidth: 4,
-                color: Colors.blue,
+                color:AppTheme.appBlueColor,
                 belowBarData: BarAreaData(
                     show: true, color: Colors.blue.withOpacity(0.3))),
             LineChartBarData(
                 spots: spotsEfficiency,
                 isCurved: true,
                 barWidth: 4,
-                color: Colors.green,
+                color: AppTheme.appgreenColor,
                 belowBarData: BarAreaData(
                     show: true, color: Colors.green.withOpacity(0.3))),
-            LineChartBarData(
-                spots: spotsLatency,
-                isCurved: true,
-                barWidth: 4,
-                color: Colors.red,
-                belowBarData: BarAreaData(
-                    show: true, color: Colors.red.withOpacity(0.3))),
-            LineChartBarData(
-                spots: spotsRemSleep,
-                isCurved: true,
-                barWidth: 4,
-                color: Colors.yellow,
-                belowBarData: BarAreaData(
-                    show: true, color: Colors.yellow.withOpacity(0.3))),
-            LineChartBarData(
-                spots: spotsRestfulness,
-                isCurved: true,
-                barWidth: 4,
-                color: Colors.purple,
-                belowBarData: BarAreaData(
-                    show: true, color: Colors.purple.withOpacity(0.3))),
-            LineChartBarData(
-                spots: spotsTiming,
-                isCurved: true,
-                barWidth: 4,
-                color: Colors.orange,
-                belowBarData: BarAreaData(
-                    show: true, color: Colors.orange.withOpacity(0.3))),
-            LineChartBarData(
-                spots: spotsTotalSleep,
-                isCurved: true,
-                barWidth: 4,
-                color: Colors.cyan,
-                belowBarData: BarAreaData(
-                    show: true, color: Colors.cyan.withOpacity(0.3))),
           ],
           // titlesData: FlTitlesData(
           //   leftTitles: AxisTitles(

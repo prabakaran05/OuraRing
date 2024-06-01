@@ -72,7 +72,8 @@ class Contributors {
         this.remSleep,
         this.restfulness,
         this.timing,
-        this.totalSleep});
+        this.totalSleep}
+      );
 
   Contributors.fromJson(Map<String, dynamic> json) {
     deepSleep = json['deep_sleep'] ?? 0;

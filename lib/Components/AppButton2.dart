@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppButton extends StatelessWidget {
+class AppButton2 extends StatelessWidget {
   final double width;
   final double height;
   final String title;
@@ -12,7 +12,7 @@ class AppButton extends StatelessWidget {
   final Color borderColor;
   final FontWeight fontWeight;
 
-  const AppButton({
+  const AppButton2({
     required this.width,
     required this.height,
     required this.title,
