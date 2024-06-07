@@ -27,17 +27,21 @@ class HomeScreenController extends GetxController {
   RxBool bedswiped = RxBool(false);
   TextEditingController TokenBedController = TextEditingController();
   TextEditingController pointsController = TextEditingController(text: "All");
+  TextEditingController pointsControllerSecond = TextEditingController(text: "All");
   final ApiConnect _connect = Get.put(ApiConnect());
   RxList<Contributors>? contributors = RxList();
   RxList<StressData> stressData = RxList();
   RxList<OuraApiResponse>? ouraApiResponse = RxList();
   RxList<String>? key = RxList();
+  RxList<String>? keySecond = RxList();
   RxList<String> selectedPoints = RxList();
   List<LineChartBarData>? lineChart = [];
+  List<LineChartBarData>? lineChartSecond = [];
   String from_date = "";
   String to_date = "";
   RxString currentDate = RxString("");
   RxBool isPoints = RxBool(false);
+  RxBool isPointsSecond = RxBool(false);
 
   List<String> alphabet = [
     "A",
@@ -62,12 +66,18 @@ class HomeScreenController extends GetxController {
   List<FlSpot> spotsStressHigh = [];
   List<FlSpot> spotsStressRecovery = [];
 
+
+
+  List<FlSpot> recoveryHigh = [];
+  List<FlSpot> stressHigh = [];
+
   @override
   void onInit() async {
     super.onInit();
 
     from_date = formatDate(DateTime.now(), [yyyy, '-', mm, '-', "01"]);
     to_date = formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]);
+
     currentDate.value = "${formatDate(DateTime.now(), [
           "01",
           '-',
@@ -78,8 +88,6 @@ class HomeScreenController extends GetxController {
 
     key!.add("All");
     selectedPoints!.add("All");
-    key!.add("Stress High");
-    key!.add("Stress Recovery");
     key!.add("Deep Sleep");
     key!.add("Efficiency");
     key!.add("Latency");
@@ -88,11 +96,25 @@ class HomeScreenController extends GetxController {
     key!.add("Spot Timing");
     key!.add("Total Sleep");
 
+
+    keySecond!.add("All");
+    keySecond!.add("Recovery High");
+    keySecond!.add("Stress High");
+
     firstCall();
   }
 
   Future<void> generateCall() async {
     /*Adding the Points to their separate Array*/
+    spotsStressHigh!.clear();
+    spotsStressRecovery!.clear();
+    spotsDeepSleep!.clear();
+    spotsEfficiency!.clear();
+    spotsLatency!.clear();
+    spotsRemSleep!.clear();
+    spotsRestfulness!.clear();
+    spotsTiming!.clear();
+    spotsTotalSleep!.clear();
     for (int i = 0; i < ouraApiResponse!.length; i++) {
       final contributors = ouraApiResponse![i];
       spotsStressHigh
@@ -116,30 +138,30 @@ class HomeScreenController extends GetxController {
 
     /*Condition for the Drop down*/
     if (selectedPoints.contains("All")) {
-      lineChart!.add(
-        LineChartBarData(
-          spots: spotsStressHigh,
-          isCurved: true,
-          barWidth: 4,
-          color: AppTheme.appCyanColor,
-          belowBarData: BarAreaData(
-            show: true,
-            color: Colors.cyan.withOpacity(0.3),
-          ),
-        ),
-      );
-      lineChart!.add(
-        LineChartBarData(
-          spots: spotsStressRecovery,
-          isCurved: true,
-          barWidth: 4,
-          color:AppTheme.appRedColor,
-          belowBarData: BarAreaData(
-            show: true,
-            color: Colors.red.withOpacity(0.3),
-          ),
-        ),
-      );
+      // lineChart!.add(
+      //   LineChartBarData(
+      //     spots: spotsStressHigh,
+      //     isCurved: true,
+      //     barWidth: 4,
+      //     color: AppTheme.appCyanColor,
+      //     belowBarData: BarAreaData(
+      //       show: true,
+      //       color: Colors.cyan.withOpacity(0.3),
+      //     ),
+      //   ),
+      // );
+      // lineChart!.add(
+      //   LineChartBarData(
+      //     spots: spotsStressRecovery,
+      //     isCurved: true,
+      //     barWidth: 4,
+      //     color:AppTheme.appRedColor,
+      //     belowBarData: BarAreaData(
+      //       show: true,
+      //       color: Colors.red.withOpacity(0.3),
+      //     ),
+      //   ),
+      // );
       lineChart!.add(
         LineChartBarData(
             spots: spotsDeepSleep,
@@ -314,6 +336,83 @@ class HomeScreenController extends GetxController {
     initialLoading.value = true;
     initialLoading.value = false;
   }
+  Future<void> generateCallSecond() async {
+    /*Adding the Points to their separate Array*/
+    spotsStressHigh!.clear();
+    spotsStressRecovery!.clear();
+    for (int i = 0; i < ouraApiResponse!.length; i++) {
+      final contributors = ouraApiResponse![i];
+      spotsStressHigh
+          .add(FlSpot(i.toDouble(), contributors.stressHigh!.toDouble()));
+      spotsStressRecovery
+          .add(FlSpot(i.toDouble(), contributors.recoveryHigh!.toDouble()));
+       }
+
+    lineChartSecond!.clear();
+
+    /*Condition for the Drop down*/
+    if (selectedPoints.contains("All")) {
+      lineChartSecond!.add(
+        LineChartBarData(
+          spots: spotsStressHigh,
+          isCurved: true,
+          barWidth: 4,
+          color: AppTheme.appCyanColor,
+          belowBarData: BarAreaData(
+            show: true,
+            color: Colors.cyan.withOpacity(0.3),
+          ),
+        ),
+      );
+
+      lineChartSecond!.add(
+        LineChartBarData(
+          spots: spotsStressRecovery,
+          isCurved: true,
+          barWidth: 4,
+          color:AppTheme.appRedColor,
+          belowBarData: BarAreaData(
+            show: true,
+            color: Colors.red.withOpacity(0.3),
+          ),
+        ),
+      );
+
+    }
+    else {
+      if (selectedPoints.contains("Stress High")) {
+        lineChartSecond!.add(
+          LineChartBarData(
+            spots: spotsStressHigh,
+            isCurved: true,
+            barWidth: 4,
+            color:AppTheme.appCyanColor,
+            belowBarData: BarAreaData(
+              show: true,
+              color: Colors.cyan.withOpacity(0.3),
+            ),
+          ),
+        );
+      }
+      if (selectedPoints.contains("Stress Recovery")) {
+        lineChartSecond!.add(
+          LineChartBarData(
+            spots: spotsStressRecovery,
+            isCurved: true,
+            barWidth: 4,
+            color: AppTheme.appRedColor,
+            belowBarData: BarAreaData(
+              show: true,
+              color: Colors.red.withOpacity(0.3),
+            ),
+          ),
+        );
+      }
+    }
+
+    initialLoading.value = true;
+    initialLoading.value = false;
+  }
 
   Future<void> firstCall() async {
     if (!await AppUtility().connectionChecker()) {
@@ -391,6 +490,7 @@ class HomeScreenController extends GetxController {
       ouraApiResponse!.add(data);
     }
     generateCall();
+    generateCallSecond();
     initialLoading.value = true;
     initialLoading.value = false;
   }

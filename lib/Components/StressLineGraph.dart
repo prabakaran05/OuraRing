@@ -1,85 +1,69 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../ModelResponse/OuraApiResponse.dart';
-import '../ModelResponse/StressResponse.dart';
 
-class Stresslinegraph extends StatelessWidget {
+import '../ModelResponse/OuraApiResponse.dart';
+import '../Utilis/theme.dart';
+
+class StressLineGraph extends StatelessWidget {
   final List<OuraApiResponse> StressList;
   final List<LineChartBarData> linesChart;
-  Stresslinegraph({super.key, required this.StressList, required this.linesChart});
+
+  StressLineGraph({required this.StressList, required this.linesChart});
 
   @override
   Widget build(BuildContext context) {
-
+    // List<FlSpot> recoveryHigh = [];
+    // List<FlSpot> stressHigh = [];
+    //
+    // for (int i = 0; i < StressList.length; i++) {
+    //   final contributors = StressList[i];
+    //   recoveryHigh.add(FlSpot(i.toDouble(), contributors.recoveryHigh!.toDouble()));
+    //   stressHigh.add(FlSpot(i.toDouble(), contributors.stressHigh!.toDouble()));
+    // }
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     return Column(
       children: [
-        SizedBox(height: 10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+        Column(mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                     width: width * 0.40,
-                    child: LegendItem(color: Colors.cyan, text: 'Stress High')),
+                    child: LegendItem(color:AppTheme.appBlueColor, text: 'Recovery High')),
                 Container(
                     width: width * 0.40,
-                    child:
-                        LegendItem(color: Colors.red, text: 'Stress Recovery')),
+                    child: LegendItem(color:AppTheme.appRedColor, text: 'Stress High')),
               ],
             ),
             SizedBox(height: 20),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.blue, text: 'Deap Sleep')),
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.green, text: 'Efficiency')),
-            ]),
-            SizedBox(height: 20),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.grey, text: 'Latency')),
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.yellow, text: 'Rem Sleep')),
-            ]),
-            SizedBox(height: 20),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.purple, text: 'Restfulness')),
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.orange, text: 'spotsTiming')),
-            ]),
-            SizedBox(height: 20),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              // Container(
-              //     width: width * 0.40,
-              //     child:
-              //         LegendItem(color: Colors.pinkAccent, text: 'Stress Recovery')),
-              Container(
-                  width: width * 0.40,
-                  child: LegendItem(color: Colors.deepPurple, text: 'TotalSleep')),
-            ]),
-            SizedBox(height: 20),
-          ],
+          ]
         ),
-        SizedBox(height: 20),
         Container(
           height: height / 2,
           child: LineChart(
             LineChartData(
-              lineBarsData: linesChart,
+              lineBarsData:linesChart,
+              // lineBarsData: [
+              //   LineChartBarData(
+              //     spots: recoveryHigh,
+              //     isCurved: true,
+              //     color: Colors.red,
+              //     barWidth: 2,
+              //     belowBarData: BarAreaData(show: true, color: Colors.red.withOpacity(0.3)),
+              //   ),
+              //   LineChartBarData(
+              //     spots: stressHigh,
+              //     isCurved: true,
+              //     color: Colors.blue,
+              //     barWidth: 2,
+              //     belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
+              //   ),
+              // ],
               titlesData: FlTitlesData(
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
@@ -100,16 +84,14 @@ class Stresslinegraph extends StatelessWidget {
                 leftTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
-                    reservedSize: 50, // try increase
+                    reservedSize: 50,
                     getTitlesWidget: (value, meta) {
                       final left = value.toInt();
-                      print(left);
                       return SideTitleWidget(
                         axisSide: meta.axisSide,
                         space: 8.0,
                         child: Text(left == 0 ? 'Ratio $left' : left.toString(),
-                            style: const TextStyle(
-                                fontSize: 10, color: Colors.black)),
+                            style: const TextStyle(fontSize: 10, color: Colors.black)),
                       );
                     },
                     interval: 1000,

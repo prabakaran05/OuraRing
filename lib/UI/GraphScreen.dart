@@ -10,6 +10,7 @@ class GraphScreen extends GetView<GraphScreenController> {
 
   @override
   Widget build(BuildContext context) {
+
     GraphScreenController controller = Get.put(GraphScreenController());
     List<_SalesData> data = [
       _SalesData('Jan', 35),
@@ -39,6 +40,7 @@ class GraphScreen extends GetView<GraphScreenController> {
         ]));
   }
 }
+
 class _SalesData {
   _SalesData(this.year, this.sales);
   final String year;
